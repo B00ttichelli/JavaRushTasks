@@ -36,7 +36,7 @@ public class Solution {
         ArrayList<Integer> integers = new ArrayList<Integer>();
         Collections.addAll(integers, 1000, 2000, 3000);
 
-
+/*
         String[] stringArray = toStringArray(strings);
         for (String string : stringArray) {
             System.out.println(string);
@@ -45,7 +45,7 @@ public class Solution {
         Integer[] integerArray = toIntegerArray(integers);
         for (Integer integer : integerArray) {
             System.out.println(integer);
-        }
+        }*/
     }
     // Раскоментировать при здаче
    /* public static String[] toStringArray(ArrayList<String> strings) {
