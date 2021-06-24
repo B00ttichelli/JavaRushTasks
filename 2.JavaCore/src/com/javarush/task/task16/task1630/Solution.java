@@ -77,33 +77,33 @@ public class Solution {
 
         void start();
     }
+
     //add your code here - добавьте код тут
-        public static class ReadFileThread extends Thread implements ReadFileInterface {
-            String filename;
-            StringBuffer content = new StringBuffer("");
+    public static class ReadFileThread extends Thread implements ReadFileInterface {
+        String filename;
+        StringBuffer content = new StringBuffer("");
 
 
-            @Override
-            public void run() {
+        @Override
+        public void run() {
 
-                try {
-                    Files.newBufferedReader(Paths.get(filename)).lines().forEach(a->content.append(a+" "));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
+            try {
+                Files.newBufferedReader(Paths.get(filename)).lines().forEach(a -> content.append(a + " "));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
-            @Override
-            public void setFileName(String fullFileName) {
-                    this.filename = fullFileName;
-            }
-
-            @Override
-            public String getFileContent() {
-                return content.toString();
-            }
         }
+
+        @Override
+        public void setFileName(String fullFileName) {
+            this.filename = fullFileName;
+        }
+
+        @Override
+        public String getFileContent() {
+            return content.toString();
+        }
+    }
 
 }
