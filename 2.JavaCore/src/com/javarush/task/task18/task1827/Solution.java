@@ -56,12 +56,12 @@ public class Solution {
             BufferedReader filerw = new BufferedReader(new FileReader(filename));
             List<String> collect = filerw.lines().collect(Collectors.toList());
             String s = collect.get(0);
-            Integer currentId = Integer.valueOf(s.substring(0,8).trim());
+            Integer currentId = Integer.parseInt(s.substring(0,8).trim());
             for (String each:collect
                  ) {
 
-                if (Integer.valueOf(each.substring(0,8).trim())>currentId){
-                    currentId = Integer.valueOf(each.substring(0,8).trim());
+                if (Integer.parseInt(each.substring(0,8).trim())>currentId){
+                    currentId = Integer.parseInt(each.substring(0,8).trim());
 
                 }
             }
@@ -109,7 +109,6 @@ public class Solution {
             bufferedWriter.close();
             bufferedReader.close();
             filerw.close();
-
 
         }
     }
