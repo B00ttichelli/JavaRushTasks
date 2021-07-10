@@ -63,7 +63,7 @@ public class Solution {
                 System.out.println(originalStr+value.toString());
 
         }
-
+        System.out.println(1/0);
     }
 
     public static class TestString {
