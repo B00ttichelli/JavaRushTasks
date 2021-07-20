@@ -107,8 +107,9 @@ public class Solution {
 
         public void load(InputStream inputStream) throws Exception {
             //implement this method - реализуйте этот метод
-
-            String info = new String(inputStream.readAllBytes(),"UTF-8");
+            byte [] buff = new byte[inputStream.available()];
+            inputStream.read(buff,0,inputStream.available());
+            String info = new String(buff,"UTF-8");
             String[] split = info.split(";");
             this.name = split [0];
             for (int i = 1; i < split.length ; i=i+2) {
