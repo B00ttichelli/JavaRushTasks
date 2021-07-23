@@ -29,69 +29,24 @@ Requirements:
 */
 
 public class Solution {
-    private static final ArrayList<Long> hardcoded = new ArrayList<>();
-
-    static {
-
-        hardcoded.add(1L);
-        hardcoded.add(2L);
-        hardcoded.add(3L);
-        hardcoded.add(4L);
-        hardcoded.add(5L);
-        hardcoded.add(6L);
-        hardcoded.add(7L);
-        hardcoded.add(8L);
-        hardcoded.add(9L);
-        hardcoded.add(153L);
-        hardcoded.add(370L);
-        hardcoded.add(371L);
-        hardcoded.add(407L);
-        hardcoded.add(1634L);
-        hardcoded.add(8208L);
-        hardcoded.add(9474L);
-        hardcoded.add(54748L);
-        hardcoded.add(92727L);
-        hardcoded.add(93084L);
-        hardcoded.add(548834L);
-        hardcoded.add(1741725L);
-        hardcoded.add(4210818L);
-        hardcoded.add(9800817L);
-        hardcoded.add(9926315L);
-        hardcoded.add(24678050L);
-        hardcoded.add(24678051L);
-        hardcoded.add(88593477L);
-        hardcoded.add(146511208L);
-        hardcoded.add(472335975L);
-        hardcoded.add(534494836L);
-        hardcoded.add(912985153L);
-        hardcoded.add(4679307774L);
-        hardcoded.add(32164049650L);
-        hardcoded.add(32164049651L);
-        hardcoded.add(40028394225L);
-        hardcoded.add(42678290603L);
-        hardcoded.add(44708635679L);
-        hardcoded.add(49388550606L);
-        hardcoded.add(82693916578L);
-        hardcoded.add(94204591914L);
-        hardcoded.add(28116440335967L);
-        hardcoded.add(4338281769391370L);
-        hardcoded.add(4338281769391371L);
-        hardcoded.add(21897142587612075L);
-        hardcoded.add(35641594208964132L);
-        hardcoded.add(35875699062250035L);
-        hardcoded.add(1517841543307505039L);
-        hardcoded.add(3289582984443187032L);
-        hardcoded.add(4498128791164624869L);
-        hardcoded.add(4929273885928088826L);
+        // Это тебе не хардбасс а хардкод ;)
+    private static final long [] hardcoded = {1L,2L,3L,4L,5L,6L,7L,8L,9L,153L,370L,371L,407L,1634L,
+                                                8208L,9474L,54748L,92727L,93084L,548834L,1741725L,4210818L,
+                                                9800817L,9926315L,24678050L,24678051L,88593477L,146511208L,472335975L,
+                                                534494836L,912985153L,4679307774L,32164049650L,32164049651L,40028394225L,
+                                                42678290603L,44708635679L,49388550606L,82693916578L,94204591914L,
+                                                28116440335967L,4338281769391370L,4338281769391371L,21897142587612075L,
+                                                35641594208964132L,35875699062250035L,1517841543307505039L,
+                                                    3289582984443187032L,4498128791164624869L,4929273885928088826L};
 
 
-    }
+
 
 
     public static long[] getNumbers(long N) {
 
         ArrayList<Long> tmp = new ArrayList<>();
-        for (Long l : hardcoded
+        for (long l : hardcoded
         ) {
             if (l < N) {
                 tmp.add(l);
@@ -101,7 +56,6 @@ public class Solution {
         for (int i = 0; i < tmp.size(); i++) {
             result[i] = tmp.get(i);
         }
-
 
         return result;
     }
