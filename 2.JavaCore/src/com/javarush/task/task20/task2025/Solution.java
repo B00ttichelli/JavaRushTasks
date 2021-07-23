@@ -44,7 +44,7 @@ public class Solution {
 
 
     public static long[] getNumbers(long N) {
-
+    //както корявенько но делал в попыхах
         ArrayList<Long> tmp = new ArrayList<>();
         for (long l : hardcoded
         ) {
