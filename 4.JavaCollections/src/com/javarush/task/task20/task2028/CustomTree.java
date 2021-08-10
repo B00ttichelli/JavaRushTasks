@@ -133,7 +133,7 @@ Requirements:
         4. Если ни один элемент не способен иметь потомков, необходимо восстановить такую возможность.*/
 
 public class CustomTree extends AbstractList<String> implements Cloneable, Serializable {
-
+//
 
     Entry<String> root;
     private transient int size = 0;
