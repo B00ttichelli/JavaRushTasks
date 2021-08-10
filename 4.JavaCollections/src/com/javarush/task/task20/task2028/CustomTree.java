@@ -1,10 +1,7 @@
 package com.javarush.task.task20.task2028;
 
 import java.io.Serializable;
-import java.util.AbstractList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /* 
 Построй дерево(1)
@@ -114,72 +111,160 @@ Requirements:
 
 */
 
-public class CustomTree extends AbstractList<String> implements  Cloneable, Serializable{
+/*Добавлять в дерево элементы мы можем, теперь займись удалением:
+
+        Необходимо реализовать метод remove(Object o), который будет удалять элемент дерева имя которого было полученного в качестве параметра.
+
+        Если переданный объект не является строкой, метод должен бросить UnsupportedOperationException.
+
+        Если в дереве присутствует несколько элементов с переданным именем - можешь удалить только первый найденный.
+
+        Не забывай сверять поведение своего дерева с картинкой:
+
+
+        Что будет если удалить из дерева элементы "3", "4", "5" и "6", а затем попытаемся добавить новый елемент?
+
+        В таком случае элементы "1" и "2" должны восстановить возможность иметь потомков (возможно придется внести изменения в метод add()).
+
+        Requirements:
+        1. После удаления последнего добавленного элемента из дерева с помощью метода remove, метод size должен возвращать N-1.
+        2. После удаления второго элемента добавленного в дерево, метод size должен возвращать N/2 + 1 (для случаев где N > 2 и является степенью двойки), N - размер дерева до удаления.
+        3. Если переданный объект не является строкой, метод remove() должен бросить UnsupportedOperationException.
+        4. Если ни один элемент не способен иметь потомков, необходимо восстановить такую возможность.*/
+
+public class CustomTree extends AbstractList<String> implements Cloneable, Serializable {
+
 
     Entry<String> root;
     private transient int size = 0;
-    List<Entry<String>> list = new LinkedList<>();
 
+    public CustomTree() {
+        root = new Entry<>("0");
+        root.parent = root;
 
-  public CustomTree(){
-      root = new Entry<>("0");
-      root.parent = root;
-      list.add(root);
-  }
+    }
 
     public String getParent(String s) {
-      String result = null;
+        String result = null;
+        Queue<Entry<String>> queue = new LinkedList<>();
+        Entry<String> top = root;
+        queue.add(top);
 
-        for (Entry<String> e: list
-             ) {
-            if(e.elementName.equals(s)){
-                result = e.parent.elementName;
-            }
-        }
+         while (!queue.isEmpty()){
+             if (top.elementName.equals(s)) {
 
-      return result;
+                 return top.parent.elementName;
+
+             } else {
+                 if (top.leftChild != null) {
+                     queue.add(top.leftChild);
+                    /* System.out.println(top.leftChild.elementName + "Added to queue as  left child " + "with parent " + top.leftChild.parent.elementName);*/
+                 }
+                 if (top.rightChild != null) {
+                     queue.add(top.rightChild);
+                    /* System.out.println(top.rightChild.elementName + "Added to queue as  right  child "+ "with parent "+ top.rightChild.parent.elementName);*/
+                 }
+             }
+
+             top = queue.poll();
+           /*  System.out.println(top.elementName + "get from cherga");*/
+         }
+
+        return result;
     }
 
     @Override
     public boolean add(String s) {
-      Entry<String> entry = new Entry<>(s);
-        for (Entry<String> e:list
-             ) {
-            if(e.isAvailableToAddChildren()){
-                entry.parent = e;
-                if(e.availableToAddLeftChildren){
-                    e.leftChild = entry;
-                    list.add(entry);
-                    e.availableToAddLeftChildren = false;
+        Entry<String> entry = new Entry<>(s);
+        Queue<Entry<String>> queue = new LinkedList<>();
+        Entry<String> top = root;
+        do {
+            if (top.isAvailableToAddChildren()) {
+                if (top.availableToAddLeftChildren) {
+                    entry.parent = top;
+                    top.leftChild = entry;
+                    top.availableToAddLeftChildren = false;
                     size++;
+                    /*System.out.println(s + " added as child to " + top.elementName );*/
                     return true;
-                } else if(e.availableToAddRightChildren){
-                    e.rightChild = entry;
-                    list.add(entry);
-                    e.availableToAddRightChildren = false;
+                } else if (top.availableToAddRightChildren && top.rightChild==null) {
+                    entry.parent = top;
+                    top.rightChild = entry;
+                    top.availableToAddRightChildren = false;
                     size++;
+                    /*System.out.println(s + " added as child to " + top.elementName );*/
                     return true;
                 }
+
+            } else {
+                if(top.leftChild != null){queue.add(top.leftChild);}
+                if(top.rightChild != null){queue.add(top.rightChild);}
+                top = queue.poll();
             }
-        }
-        return  false;
+
+        } while (!queue.isEmpty());
+
+        return false;
     }
 
-    static class Entry<T> implements  Serializable{
-        String elementName;
-        boolean availableToAddLeftChildren, availableToAddRightChildren;
-        Entry<T> parent, leftChild, rightChild;
+    @Override
+    public boolean remove(Object o) {
+        if(o instanceof String){
+          String toRemove   = (String) o;
+          Queue<Entry<String>> queue = new LinkedList<>();
+          Entry<String>  top = root;
+            do {
+                if(top.elementName.equals(toRemove)){
+                    if(top.parent.rightChild == top){
+                        /*System.out.println(top.parent.rightChild.elementName+" is removed");*/
+                        top.parent.rightChild = null;
+                        /*top.parent.availableToAddRightChildren = true;*/
+                        return  true;
+                    }else if(top.parent.leftChild == top){
+                       /* System.out.println(top.parent.leftChild.elementName + " is removed");*/
+                        top.parent.leftChild = null;
+                      /*  top.parent.availableToAddLeftChildren = true;*/
+                        return true;
+                    }
+                    size = size - countChild(top);
 
-        public Entry(String string){
-            this.elementName = string;
-            this.availableToAddLeftChildren = true;
-            this.availableToAddRightChildren = true;
-        }
+                }else {
+                    if(top.leftChild != null){queue.add(top.leftChild);}
+                    if(top.rightChild != null){queue.add(top.rightChild);}
+                    top = queue.poll();
+                }
+            }while (!queue.isEmpty());
 
-        public boolean isAvailableToAddChildren(){
-                return  availableToAddLeftChildren|availableToAddRightChildren;
+
+
+        }else {
+            throw  new UnsupportedOperationException();
         }
+        return false;
     }
+    private int countChild(Entry<String> top){
+        int result = 0;
+        Queue<Entry<String>> queue  = new LinkedList<>();
+        do {
+            if (top.leftChild != null){
+                queue.add(top.leftChild);
+                result++;
+            }
+            if(top.rightChild != null){
+                queue.add(top.rightChild);
+                result++;
+            }
+            top = queue.poll();
+        }while (!queue.isEmpty());
+
+
+        return result;
+    }
+    @Override
+    public int size() {
+        return size;
+    }
+
     @Override
     public String set(int index, String element) {
         throw new UnsupportedOperationException();
@@ -215,8 +300,21 @@ public class CustomTree extends AbstractList<String> implements  Cloneable, Seri
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public int size() {
-        return size;
+    static class Entry<T> implements Serializable {
+        String elementName;
+        boolean availableToAddLeftChildren, availableToAddRightChildren;
+        Entry<T> parent, leftChild, rightChild;
+
+        public Entry(String string) {
+            this.elementName = string;
+            this.availableToAddLeftChildren = true;
+            this.availableToAddRightChildren = true;
+        }
+
+        public boolean isAvailableToAddChildren() {
+            return availableToAddLeftChildren | availableToAddRightChildren;
+        }
     }
+
+
 }
