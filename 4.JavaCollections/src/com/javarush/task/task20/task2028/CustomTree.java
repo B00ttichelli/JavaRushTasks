@@ -172,7 +172,7 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
 
         return result;
     }
-///
+
     @Override
     public boolean add(String s) {
         Entry<String> entry = new Entry<>(s);
