@@ -21,7 +21,15 @@ import java.awt.event.KeyEvent;
         Requirements:
         1. Внимательно изучи метод run в классе Tetris.
         2. Внимательно изучи метод createRandomFigure в классе FigureFactory.
-        3. Внимательно изучи класс KeyboardObserver.*/
+        3. Внимательно изучи класс KeyboardObserver.
+
+
+
+
+        */
+
+
+
 
 /**
  * Класс Tetris - содержит основной функционал игры.
